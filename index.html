@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[동아마이스터고] C 프로그래밍 기말고사 전범위 총정리 (1p ~ 134p)</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; color: black !important; }
+      .page-break { page-break-before: always; }
+    }
+    .quiz-card.correct { border-color: #10B981 !important; background-color: rgba(16, 185, 129, 0.08) !important; }
+    .quiz-card.incorrect { border-color: #EF4444 !important; background-color: rgba(239, 68, 68, 0.08) !important; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body class="bg-[var(--background,#0f172a)] text-[var(--foreground,#f8fafc)] antialiased min-h-screen p-3 md:p-6">
+
+  <!-- Main Container -->
+  <div class="max-w-6xl mx-auto space-y-6">
+
+    <!-- Header Section -->
+    <header class="bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 md:p-8 shadow-xl">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--card-border,#334155)] pb-6">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30">동아마이스터고등학교</span>
+            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">기말고사 4지선다형 완벽대비</span>
+            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-400 border border-purple-500/30">1p ~ 134p 전범위</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-[var(--foreground,#f8fafc)]">
+            C 프로그래밍 기말고사 핵심 총정리 & 실전 모의평가
+          </h1>
+          <p class="text-sm text-[var(--muted-foreground,#94a3b8)] mt-1.5">
+            교과서 핵심 개념 · 4지선다형 기출 함정 포인트 · 인터랙티브 문제 풀이 및 교사용 리뷰 시스템
+          </p>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap items-center gap-2 no-print">
+          <button id="toggleTeacherMode" onclick="toggleTeacherMode()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-all shadow flex items-center gap-1.5">
+            <span id="teacherIcon">🎓</span> <span id="teacherText">교사 강의 모드 (정답 공개)</span>
+          </button>
+          <button onclick="window.print()" class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-[var(--background,#0f172a)] hover:bg-slate-700 border border-[var(--card-border,#334155)] transition flex items-center gap-1.5">
+            🖨️ 인쇄 / PDF 저장
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Nav Search & Filter Bar -->
+      <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
+        <div class="relative w-full sm:w-96">
+          <input type="text" id="searchInput" oninput="handleSearch()" placeholder="키워드 검색 (예: switch, while, 증감, printf, 순서도...)" 
+            class="w-full px-3.5 py-2 text-xs rounded-xl bg-[var(--background,#0f172a)] border border-[var(--card-border,#334155)] focus:outline-none focus:border-blue-500 text-[var(--foreground,#f8fafc)] placeholder-[var(--placeholder,#64748b)]">
+          <span class="absolute right-3 top-2.5 text-xs text-[var(--muted-foreground,#94a3b8)]">🔍</span>
+        </div>
+        <div class="flex items-center gap-1.5 text-xs text-[var(--muted-foreground,#94a3b8)]">
+          <span>시험 범위:</span>
+          <span class="font-mono text-blue-400 font-bold">1p ~ 134p</span>
+          <span class="mx-1">•</span>
+          <span>출제 문항:</span>
+          <span class="font-mono text-emerald-400 font-bold">4지선다형 객관식</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tab Bar -->
+    <nav class="flex overflow-x-auto gap-2 border-b border-[var(--card-border,#334155)] pb-1 no-print">
+      <button onclick="switchTab('tab-overview')" id="btn-tab-overview" class="tab-btn px-4 py-2.5 text-xs font-bold rounded-xl border transition-all bg-blue-600 text-white border-blue-500 shadow-sm flex items-center gap-1.5">
+        🧭 <span>전체 개요 & 출제맵</span>
+      </button>
+      <button onclick="switchTab('tab-part1')" id="btn-tab-part1" class="tab-btn px-4 py-2.5 text-xs font-medium rounded-xl border border-transparent hover:bg-[var(--card,#1e293b)] text-[var(--muted-foreground,#94a3b8)] transition-all flex items-center gap-1.5">
+        📘 <span>PART 01. 프로그래밍 개요 (10p~49p)</span>
+      </button>
+      <button onclick="switchTab('tab-part2')" id="btn-tab-part2" class="tab-btn px-4 py-2.5 text-xs font-medium rounded-xl border border-transparent hover:bg-[var(--card,#1e293b)] text-[var(--muted-foreground,#94a3b8)] transition-all flex items-center gap-1.5">
+        💻 <span>PART 02. C 프로그래밍 기초 (50p~134p)</span>
+      </button>
+      <button onclick="switchTab('tab-quiz')" id="btn-tab-quiz" class="tab-btn px-4 py-2.5 text-xs font-medium rounded-xl border border-transparent hover:bg-[var(--card,#1e293b)] text-[var(--muted-foreground,#94a3b8)] transition-all flex items-center gap-1.5">
+        ✍️ <span>실전 모의평가 (4지선다 20제)</span>
+        <span id="quizBadge" class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300">0/20</span>
+      </button>
+      <button onclick="switchTab('tab-tables')" id="btn-tab-tables" class="tab-btn px-4 py-2.5 text-xs font-medium rounded-xl border border-transparent hover:bg-[var(--card,#1e293b)] text-[var(--muted-foreground,#94a3b8)] transition-all flex items-center gap-1.5">
+        📊 <span>기말 직전 암기 총정리표</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: OVERVIEW -->
+    <section id="tab-overview" class="tab-content space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-xl p-4">
+          <div class="text-xs text-[var(--muted-foreground,#94a3b8)] font-semibold">총 학습 범위</div>
+          <div class="text-2xl font-black text-blue-400 mt-1">1p ~ 134p</div>
+          <div class="text-[11px] text-[var(--muted-foreground,#94a3b8)] mt-1">총 8개 챕터 (개요~제어문)</div>
+        </div>
+        <div class="bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-xl p-4">
+          <div class="text-xs text-[var(--muted-foreground,#94a3b8)] font-semibold">평가 문항 유형</div>
+          <div class="text-2xl font-black text-emerald-400 mt-1">4지선다형</div>
+          <div class="text-[11px] text-[var(--muted-foreground,#94a3b8)] mt-1">단원평가·기출 변형 객관식</div>
+        </div>
+        <div class="bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-xl p-4">
+          <div class="text-xs text-[var(--muted-foreground,#94a3b8)] font-semibold">최대 배점 영역</div>
+          <div class="text-2xl font-black text-amber-400 mt-1">제어문 & 연산자</div>
+          <div class="text-[11px] text-[var(--muted-foreground,#94a3b8)] mt-1">루프 최종값, 증감 연산자</div>
+        </div>
+        <div class="bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-xl p-4">
+          <div class="text-xs text-[var(--muted-foreground,#94a3b8)] font-semibold">모의평가 문항수</div>
+          <div class="text-2xl font-black text-purple-400 mt-1">20 문항</div>
+          <div class="text-[11px] text-[var(--muted-foreground,#94a3b8)] mt-1">즉시 채점 & 상세 해설 제공</div>
+        </div>
+      </div>
+
+      <!-- Chapter Roadmap Card -->
+      <div class="bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-6 space-y-4">
+        <h2 class="text-base font-bold flex items-center gap-2">
+          <span>🗺️</span> 기말고사 전범위 출제 맵 & 단원별 핵심 포인트
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Part 1 List -->
+          <div class="p-4 rounded-xl bg-[var(--background,#0f172a)]/60 border border-[var(--card-border,#334155)] space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-blue-400 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">PART 01. 프로그래밍의 개요</span>
+              <span class="text-xs text-[var(--muted-foreground,#94a3b8)]">10p ~ 49p</span>
+            </div>
+            <ul class="text-xs space-y-2 text-[var(--muted-foreground,#94a3b8)]">
+              <li class="flex items-start gap-2">
+                <span class="font-bold text-[var(--foreground,#f8fafc)]">Ch 1. 언어 종류 (10p~18p):</span>
+                <span>저급(기계어, 어셈블리어) vs 고급(절차 지향 vs 객체 지향 언어 구분)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold text-[var(--foreground,#f8fafc)]">Ch 2. 작성 절차 (19p~24p):</span>
+                <span>문제분석$\rightarrow$설계$\rightarrow$순서도$\rightarrow$코딩$\rightarrow$번역$\rightarrow$실행$\rightarrow$평가. 컴파일러 vs 인터프리터</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold text-[var(--foreground,#f8fafc)]">Ch 3. 알고리즘 (25p~34p):</span>
+                <span>5대 조건(입력, 출력, 명확성, 유한성, 유효성). 순서도 표준 기호(단말, 입출력, 처리, 판단)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold text-[var(--foreground,#f8fafc)]">Ch 4. 개발 환경 (35p~49p):</span>
+                <span>통합개발환경(IDE: 에디터+컴파일러+디버거), 빌드 순서(`.c` $\rightarrow$ `.obj` $\rightarrow$ `.exe`), 오류 3종</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Part 2 List -->
+          <div class="p-4 rounded-xl bg-[var(--background,#0f172a)]/60 border border-[var(--card-border,#334155)] space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">PART 02. C 프로그래밍의 기초</span>
+              <span class="text-xs text-[var(--muted-foreground,#94a3b8)]">50p ~ 134p</span>
+            </div>
+            <ul class="text-xs space-y-2 text-[var(--muted-foreground,#94a3b8)]">
+              <li class="flex items-start gap-2">
+                <span class="font-bold text-[var(--foreground,#f8fafc)]">Ch 1. 변수와 자료형 (52p~78p):</span>
+                <span>C언어 역사, 식별자 명명 규칙(숫자 시작 불가, 예약어 불가), 기본 자료형 크기</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold text-[var(--foreground,#f8fafc)]">Ch 2. 입출력 함수 (79p~92p):</span>
+                <span>printf 서식자(`%d`, `%f`, `%c`, `%s`), 자릿수 제어(`%.2f`), scanf_s 주소 연산자 `&`</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold text-[var(--foreground,#f8fafc)]">Ch 3. 연산자 (93p~113p):</span>
+                <span>연산자 우선순위, 증감(전위 `++a` vs 후위 `a++`), 정수 나눗셈 `5/2=2`, `%` 규칙, 삼항 연산자</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold text-[var(--foreground,#f8fafc)]">Ch 4. 제어문 (114p~134p):</span>
+                <span>switch(실수 불가, break 누락), for 루프 탈출 후 변수값, do~while 무조건 1회 실행, continue</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: PART 1 -->
+    <section id="tab-part1" class="tab-content space-y-6 hidden">
+      <!-- Section Header -->
+      <div class="flex items-center justify-between pb-2 border-b border-[var(--card-border,#334155)]">
+        <h2 class="text-lg font-bold text-blue-400 flex items-center gap-2">
+          <span>📘</span> PART 01. 프로그래밍의 개요 (10p ~ 49p)
+        </h2>
+        <span class="text-xs text-[var(--muted-foreground,#94a3b8)]">교과서 Chapter 01 ~ Chapter 04</span>
+      </div>
+
+      <!-- Ch 1: 언어의 종류와 특징 -->
+      <div class="searchable-card bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] bg-blue-500/20 text-blue-300 font-mono">10p~18p</span>
+            CHAPTER 01. 프로그래밍 언어의 종류와 특징
+          </h3>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-medium">출제 1순위: 언어 분류</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="p-3.5 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-blue-300">1. 저급 언어 vs 고급 언어</h4>
+            <p><strong class="text-[var(--foreground,#f8fafc)]">저급 언어:</strong> 하드웨어 중심, 빠른 실행 속도.</p>
+            <ul class="list-disc list-inside text-[var(--muted-foreground,#94a3b8)] space-y-1">
+              <li><strong class="text-[var(--foreground,#f8fafc)]">기계어:</strong> 0과 1의 2진수. 컴퓨터가 직접 실행 가능한 유일한 언어. 디버깅 극히 어려움.</li>
+              <li><strong class="text-[var(--foreground,#f8fafc)]">어셈블리어:</strong> 기계어를 사람이 읽을 수 있는 기호(니모닉)로 1:1 대응시킨 저급 언어.</li>
+            </ul>
+            <p><strong class="text-[var(--foreground,#f8fafc)]">고급 언어:</strong> 사람의 자연어/영어 중심. 배우기 쉽고 이식성 높음.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-purple-300">2. 절차 지향 vs 객체 지향 언어 (핵심 암기)</h4>
+            <p><strong class="text-[var(--foreground,#f8fafc)]">절차 지향:</strong> 실행 절차와 순서 중심.</p>
+            <div class="text-[11px] font-mono p-1.5 rounded bg-slate-800 text-blue-300">C, FORTRAN, COBOL, BASIC, Pascal, ALGOL</div>
+            <p><strong class="text-[var(--foreground,#f8fafc)]">객체 지향:</strong> 데이터(속성) + 함수(행위) = 객체(Object) 중심.</p>
+            <div class="text-[11px] font-mono p-1.5 rounded bg-slate-800 text-purple-300">C++, Java, Python, C#, Smalltalk, Simula, ADA</div>
+            <div class="text-[11px] text-amber-400">⚠️ 함정: C언어는 객체지향이 아니라 "절차 지향"입니다!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch 2: 프로그래밍의 절차 -->
+      <div class="searchable-card bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] bg-blue-500/20 text-blue-300 font-mono">19p~24p</span>
+            CHAPTER 02. 프로그래밍의 절차 및 번역기
+          </h3>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-medium">출제: 순서배열 & 번역기비교</span>
+        </div>
+        <div class="space-y-3 text-xs">
+          <div class="p-3 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)]">
+            <h4 class="font-bold text-emerald-400 mb-1.5">프로그래밍 7단계 순서 (20p ~ 21p)</h4>
+            <div class="flex flex-wrap items-center gap-2 font-mono text-[11px]">
+              <span class="px-2 py-1 rounded bg-slate-800">1. 문제 분석</span> $\rightarrow$
+              <span class="px-2 py-1 rounded bg-slate-800">2. 입출력 설계</span> $\rightarrow$
+              <span class="px-2 py-1 rounded bg-slate-800">3. 순서도 작성</span> $\rightarrow$
+              <span class="px-2 py-1 rounded bg-slate-800 text-blue-300 font-bold">4. 코딩 (소스작성)</span> $\rightarrow$
+              <span class="px-2 py-1 rounded bg-slate-800 text-purple-300 font-bold">5. 번역 & 디버깅</span> $\rightarrow$
+              <span class="px-2 py-1 rounded bg-slate-800">6. 실행 & 테스트</span> $\rightarrow$
+              <span class="px-2 py-1 rounded bg-slate-800">7. 평가 & 문서화</span>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse border border-[var(--card-border,#334155)] text-[11px]">
+              <thead class="bg-slate-800/80 text-blue-300 font-bold">
+                <tr>
+                  <th class="p-2 border border-[var(--card-border,#334155)]">구분</th>
+                  <th class="p-2 border border-[var(--card-border,#334155)]">컴파일러 (Compiler)</th>
+                  <th class="p-2 border border-[var(--card-border,#334155)]">인터프리터 (Interpreter)</th>
+                </tr>
+              </thead>
+              <tbody class="text-[var(--muted-foreground,#94a3b8)]">
+                <tr>
+                  <td class="p-2 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">번역 단위</td>
+                  <td class="p-2 border border-[var(--card-border,#334155)] text-blue-300 font-semibold">프로그램 전체를 한 번에 번역</td>
+                  <td class="p-2 border border-[var(--card-border,#334155)] text-emerald-300 font-semibold">한 줄(행)씩 번역하며 즉시 실행</td>
+                </tr>
+                <tr>
+                  <td class="p-2 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">목적 파일</td>
+                  <td class="p-2 border border-[var(--card-border,#334155)] text-blue-300 font-semibold">생성함 (.obj)</td>
+                  <td class="p-2 border border-[var(--card-border,#334155)] text-red-400 font-bold">생성하지 않음 (단골 오답 함정!)</td>
+                </tr>
+                <tr>
+                  <td class="p-2 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">실행 속도</td>
+                  <td class="p-2 border border-[var(--card-border,#334155)]">빠름</td>
+                  <td class="p-2 border border-[var(--card-border,#334155)]">느림</td>
+                </tr>
+                <tr>
+                  <td class="p-2 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">대표 언어</td>
+                  <td class="p-2 border border-[var(--card-border,#334155)] font-mono">C, C++, Java</td>
+                  <td class="p-2 border border-[var(--card-border,#334155)] font-mono">Python, JavaScript, BASIC</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch 3: 알고리즘 및 순서도 -->
+      <div class="searchable-card bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] bg-blue-500/20 text-blue-300 font-mono">25p~34p</span>
+            CHAPTER 03. 알고리즘 & 순서도 표준 기호
+          </h3>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-medium">출제: 5대조건 & 기호매칭</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="p-3.5 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-amber-300">알고리즘의 5대 조건 (26p)</h4>
+            <ol class="list-decimal list-inside space-y-1 text-[var(--muted-foreground,#94a3b8)]">
+              <li><strong class="text-[var(--foreground,#f8fafc)]">입력 (Input):</strong> 외부 입력은 <span class="text-blue-300 font-bold">0개 이상</span> 존재.</li>
+              <li><strong class="text-[var(--foreground,#f8fafc)]">출력 (Output):</strong> 처리 결과는 <span class="text-emerald-300 font-bold">반드시 1개 이상</span> 도출.</li>
+              <li><strong class="text-[var(--foreground,#f8fafc)]">명확성 (Definiteness):</strong> 각 명령어는 모호함 없이 명확.</li>
+              <li><strong class="text-[var(--foreground,#f8fafc)]">유한성 (Finiteness):</strong> 한정된 단계 후 <span class="text-red-400 font-bold">반드시 종료</span>.</li>
+              <li><strong class="text-[var(--foreground,#f8fafc)]">유효성 (Effectiveness):</strong> 모든 연산은 컴퓨터가 실행 가능.</li>
+            </ol>
+          </div>
+          <div class="p-3.5 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-indigo-300">순서도(Flowchart) 핵심 기호 (29p)</h4>
+            <div class="grid grid-cols-2 gap-2 text-[11px]">
+              <div class="p-1.5 rounded bg-slate-800 border border-slate-700">
+                <span class="font-bold text-blue-400">⬭ 타원:</span> 단말 (시작/종료)
+              </div>
+              <div class="p-1.5 rounded bg-slate-800 border border-slate-700">
+                <span class="font-bold text-emerald-400">▱ 평행사변형:</span> 데이터 입출력
+              </div>
+              <div class="p-1.5 rounded bg-slate-800 border border-slate-700">
+                <span class="font-bold text-purple-400">▭ 직사각형:</span> 처리 및 연산
+              </div>
+              <div class="p-1.5 rounded bg-slate-800 border border-slate-700">
+                <span class="font-bold text-amber-400">◇ 마름모:</span> 조건 판단 및 분기
+              </div>
+            </div>
+            <p class="text-[11px] text-[var(--muted-foreground,#94a3b8)] mt-1">기본 3대 구조: <strong>순차형</strong>, <strong>선택형(분기형)</strong>, <strong>반복형</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch 4: 개발 환경 & 빌드 과정 -->
+      <div class="searchable-card bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] bg-blue-500/20 text-blue-300 font-mono">35p~49p</span>
+            CHAPTER 04. C 개발 환경 & 빌드 과정과 오류
+          </h3>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-medium">출제: 확장자변환 & 에러유형</span>
+        </div>
+        <div class="space-y-3 text-xs">
+          <div class="p-3 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)]">
+            <h4 class="font-bold text-purple-300 mb-1.5">C 프로그램 빌드 파이프라인 (확장자 변화)</h4>
+            <div class="flex flex-wrap items-center gap-2 font-mono text-[11px]">
+              <div class="px-2.5 py-1.5 rounded bg-slate-800 border border-blue-500/30 text-blue-300">
+                <strong>소스 파일</strong> (.c, .cpp)
+              </div>
+              <span>$\xrightarrow{\text{전처리기 & 컴파일러}}$</span>
+              <div class="px-2.5 py-1.5 rounded bg-slate-800 border border-emerald-500/30 text-emerald-300">
+                <strong>목적 파일</strong> (.obj)
+              </div>
+              <span>$\xrightarrow{\text{링커(Linker)}}$</span>
+              <div class="px-2.5 py-1.5 rounded bg-slate-800 border border-purple-500/30 text-purple-300">
+                <strong>실행 파일</strong> (.exe)
+              </div>
+              <span>$\xrightarrow{\text{로더(Loader)}}$</span>
+              <div class="px-2.5 py-1.5 rounded bg-slate-800 text-amber-300">
+                메모리 적재 & 실행
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700">
+              <strong class="text-red-400">1. 구문/컴파일 오류</strong>
+              <p class="text-[11px] text-[var(--muted-foreground,#94a3b8)] mt-1">세미콜론 누락, 오타 등 C 문법 위반. 컴파일러가 발견.</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700">
+              <strong class="text-amber-400">2. 런타임 오류</strong>
+              <p class="text-[11px] text-[var(--muted-foreground,#94a3b8)] mt-1">0으로 나누기, 잘못된 주소 접근 등 실행 중 비정상 종료.</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700">
+              <strong class="text-emerald-400">3. 논리 오류 (Logic)</strong>
+              <p class="text-[11px] text-[var(--muted-foreground,#94a3b8)] mt-1">문법 오류 없이 실행되나 결과가 잘못 나오는 알고리즘 실수.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: PART 2 -->
+    <section id="tab-part2" class="tab-content space-y-6 hidden">
+      <!-- Section Header -->
+      <div class="flex items-center justify-between pb-2 border-b border-[var(--card-border,#334155)]">
+        <h2 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
+          <span>💻</span> PART 02. C 프로그래밍의 기초 (50p ~ 134p)
+        </h2>
+        <span class="text-xs text-[var(--muted-foreground,#94a3b8)]">교과서 Chapter 01 ~ Chapter 04</span>
+      </div>
+
+      <!-- Ch 1: 변수와 자료형 -->
+      <div class="searchable-card bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] bg-emerald-500/20 text-emerald-300 font-mono">52p~78p</span>
+            CHAPTER 01. 변수와 자료형
+          </h3>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-medium">출제: 식별자규칙 & 크기</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <!-- 식별자 규칙 -->
+          <div class="p-3.5 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-emerald-300">식별자(변수명) 5대 명명 규칙 (57p ~ 58p)</h4>
+            <ul class="list-disc list-inside space-y-1 text-[var(--muted-foreground,#94a3b8)]">
+              <li>영문자, 숫자, 밑줄(`_`)로만 구성된다.</li>
+              <li><strong class="text-red-400">첫 글자는 반드시 영문자이거나 밑줄(`_`)</strong>이어야 하며 <strong class="text-red-400">숫자 시작 불가</strong>.</li>
+              <li>대문자와 소문자를 엄격히 구분한다 (`Score` $\neq$ `score`).</li>
+              <li><strong class="text-red-400">C 언어 예약어(키워드) 사용 불가</strong> (`int`, `for`, `return` 등).</li>
+              <li>공백 및 특수문자(`$`, `@`, `-` 등) 사용 불가.</li>
+            </ul>
+            <div class="p-2 rounded bg-slate-800 font-mono text-[11px] text-amber-300">
+              ❌ 불가: 2start, my-score, int, a bc<br>
+              ⭕ 가능: _count, start2, my_score, Student1
+            </div>
+          </div>
+          <!-- 자료형 크기 -->
+          <div class="p-3.5 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-blue-300">기본 자료형 크기 및 서식 (69p)</h4>
+            <div class="grid grid-cols-2 gap-2 text-[11px]">
+              <div class="p-1.5 rounded bg-slate-800">
+                <span class="font-mono text-emerald-400 font-bold">char:</span> 1 Byte (`%c`)
+              </div>
+              <div class="p-1.5 rounded bg-slate-800">
+                <span class="font-mono text-blue-400 font-bold">int:</span> 4 Byte (`%d`)
+              </div>
+              <div class="p-1.5 rounded bg-slate-800">
+                <span class="font-mono text-purple-400 font-bold">float:</span> 4 Byte (`%f`)
+              </div>
+              <div class="p-1.5 rounded bg-slate-800">
+                <span class="font-mono text-amber-400 font-bold">double:</span> 8 Byte (`%f`, `%lf`)
+              </div>
+            </div>
+            <p class="text-[11px] text-[var(--muted-foreground,#94a3b8)]">
+              상수 표기: 10진수(10), 8진수(`012`), 16진수(`0x1A`), 문자(`'A'`), 문자열(`"Hello"`, 끝에 `\0` 자동 추가)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch 2: 입출력 함수 -->
+      <div class="searchable-card bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] bg-emerald-500/20 text-emerald-300 font-mono">79p~92p</span>
+            CHAPTER 02. 입출력 함수 (printf & scanf_s)
+          </h3>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-red-500/20 text-red-300 font-medium">출제: scanf &amp; 누락 &amp; 서식</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="p-3.5 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-amber-300">printf 출력 형식 및 자릿수 제어 (81p ~ 82p)</h4>
+            <ul class="space-y-1 text-[var(--muted-foreground,#94a3b8)]">
+              <li>`%5d`: 5칸 확보 후 <strong>오른쪽 정렬</strong> (`  123`)</li>
+              <li>`%-5d`: 5칸 확보 후 <strong>왼쪽 정렬</strong> (`123  `)</li>
+              <li>`%.2f`: 소수 둘째 자리까지 출력 (<strong class="text-emerald-400">셋째 자리 반올림!</strong>)</li>
+              <li>`\n` (개행), `\t` (탭), `\\` (역슬래시), `%%` (% 출력)</li>
+            </ul>
+            <div class="p-2 rounded bg-slate-800 font-mono text-[11px]">
+              printf("%.2f\n", 1.235); $\rightarrow$ <strong class="text-emerald-300">1.24 출력</strong>
+            </div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-red-400">scanf_s 입력과 주소 연산자 & (84p ~ 87p)</h4>
+            <p class="text-[var(--muted-foreground,#94a3b8)]">
+              키보드로 값을 입력받아 변수에 저장할 때는 변수의 메모리 주소를 넘겨주어야 하므로 <strong class="text-red-400">반드시 &를 붙여야 함!</strong>
+            </p>
+            <div class="p-2 rounded bg-slate-800 font-mono text-[11px] text-red-300">
+              ❌ scanf_s("%d", num); $\rightarrow$ 디버그 런타임 에러 발생!<br>
+              ⭕ scanf_s("%d", &num); $\rightarrow$ 정상 작동
+            </div>
+            <p class="text-[11px] text-[var(--muted-foreground,#94a3b8)]">문자 전용: `putchar()`, `getchar()` / 문자열: `puts()`, `gets_s()`</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch 3: 연산자 -->
+      <div class="searchable-card bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] bg-emerald-500/20 text-emerald-300 font-mono">93p~113p</span>
+            CHAPTER 03. 연산자 및 우선순위
+          </h3>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-medium">출제: 전위/후위 &amp; 우선순위</span>
+        </div>
+        <div class="space-y-3 text-xs">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-3 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+              <h4 class="font-bold text-blue-300">증감 연산자 전위 vs 후위 (핵심 킬러 문제)</h4>
+              <ul class="space-y-1 text-[var(--muted-foreground,#94a3b8)]">
+                <li><strong class="text-emerald-400">전위 증가 (`++a`):</strong> 먼저 변수 값을 1 증가시킨 후 수식에 사용.</li>
+                <li><strong class="text-amber-400">후위 증가 (`a++`):</strong> 현재 변수 값을 수식에 먼저 사용한 후, 나중에 변수 값 1 증가.</li>
+              </ul>
+              <div class="p-2 rounded bg-slate-800 font-mono text-[11px]">
+                int a = 5, b = ++a; $\rightarrow$ <strong class="text-emerald-300">a=6, b=6</strong><br>
+                int a = 5, b = a++; $\rightarrow$ <strong class="text-amber-300">a=6, b=5</strong>
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+              <h4 class="font-bold text-purple-300">산술 및 논리 연산자 필수 규칙</h4>
+              <ul class="space-y-1 text-[var(--muted-foreground,#94a3b8)]">
+                <li><strong>정수 나눗셈:</strong> `5 / 2` $\rightarrow$ <strong class="text-emerald-300">2</strong> (소수점 버림)</li>
+                <li><strong>나머지 연산자 (`%`):</strong> <strong class="text-red-400">피연산자가 반드시 정수형이어야 함!</strong> (실수 `%`는 문법 에러)</li>
+                <li><strong>논리 연산자:</strong> `&&` (둘 다 참), `||` (하나라도 참), `!` (부정)</li>
+                <li><strong>단락 평가:</strong> `&&`에서 앞 조건이 거짓이면 뒤 조건은 실행조차 안 함!</li>
+              </ul>
+            </div>
+          </div>
+          <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700 text-[11px] text-amber-300">
+            ⭐ <strong>우선순위 &amp; 결합방향:</strong> 단항(`! ++ --`) $\rightarrow$ 산술(`* / %` $\rightarrow$ `+ -`) $\rightarrow$ 관계(`> < == !=`) $\rightarrow$ 논리(`&&` $\rightarrow$ `||`) $\rightarrow$ 조건(`?:`) $\rightarrow$ 대입(`= +=`).<br>
+            ⚠️ 결합방향이 <strong>우측에서 좌측($\leftarrow$)</strong>인 연산자: <strong>단항 연산자</strong>, <strong>삼항 조건 연산자</strong>, <strong>대입 연산자</strong>.
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch 4: 제어문 (114p ~ 134p) -->
+      <div class="searchable-card bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] bg-emerald-500/20 text-emerald-300 font-mono">114p~134p</span>
+            CHAPTER 04. 제어문 (조건문 · 반복문 · 이동문)
+          </h3>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-red-500/20 text-red-300 font-medium">기말고사 하이라이트</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <!-- 조건문 -->
+          <div class="p-3 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-blue-300">1. 조건문 (if &amp; switch)</h4>
+            <ul class="space-y-1 text-[var(--muted-foreground,#94a3b8)]">
+              <li>단순 if: 1줄일 때 `{ }` 생략 가능</li>
+              <li>다중 if: 첫 참 조건 1개만 실행 후 탈출</li>
+              <li><strong class="text-red-400">switch~case 4대 규칙:</strong>
+                <ol class="list-decimal list-inside pl-1 text-[11px]">
+                  <li>식에는 정수/문자만 (실수 절대 불가)</li>
+                  <li>case 값은 상수만 (변수 불가)</li>
+                  <li>break 누락 시 fall-through</li>
+                  <li>default는 일치값 없을 때 실행</li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+          <!-- 반복문 -->
+          <div class="p-3 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-emerald-300">2. 반복문 (for, while, do~while)</h4>
+            <ul class="space-y-1 text-[var(--muted-foreground,#94a3b8)]">
+              <li><strong>for문:</strong> 횟수가 정해진 반복. `for(;;)`는 무한루프.</li>
+              <li><strong class="text-amber-300">탈출 후 변수값:</strong> `for(a=1;a<=5;a++)` 종료 후 `a`는 <strong class="text-white">6</strong>!</li>
+              <li><strong>while:</strong> 선검사 후실행 (0회 실행 가능).</li>
+              <li><strong class="text-red-400">do ~ while:</strong> 선실행 후검사 (<strong class="text-emerald-300">무조건 최소 1회 실행</strong>). 문장 끝 세미콜론(`;`) 필수!</li>
+            </ul>
+          </div>
+          <!-- 이동문 -->
+          <div class="p-3 rounded-xl bg-[var(--background,#0f172a)]/50 border border-[var(--card-border,#334155)] space-y-2">
+            <h4 class="font-bold text-purple-300">3. 이동문 (break, continue, goto)</h4>
+            <ul class="space-y-1 text-[var(--muted-foreground,#94a3b8)]">
+              <li><strong class="text-blue-400">break:</strong> 반복문 또는 switch 블록 완전 탈출. (중첩 루프 시 <strong class="text-white">가장 가까운 1개만 탈출</strong>).</li>
+              <li><strong class="text-emerald-400">continue:</strong> 루프 탈출이 아님! 이번 회차 건너뛰고 다음 증감식/조건식으로 이동.</li>
+              <li><strong class="text-amber-400">goto:</strong> 레이블 위치로 무조건 점프. 가독성 저해로 <strong class="text-red-400">사용 비권장(지양)</strong>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: QUIZ -->
+    <section id="tab-quiz" class="tab-content space-y-6 hidden">
+      <!-- Quiz Header & Scoreboard -->
+      <div class="bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-bold flex items-center gap-2">
+            <span>✍️</span> 기말고사 대비 4지선다형 실전 모의평가 (20문항)
+          </h2>
+          <p class="text-xs text-[var(--muted-foreground,#94a3b8)] mt-1">
+            보기 버튼(① ~ ④)을 누르면 즉시 정답 및 상세 해설이 표시됩니다.
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="px-4 py-2 rounded-xl bg-[var(--background,#0f172a)] border border-[var(--card-border,#334155)] text-center">
+            <div class="text-[10px] text-[var(--muted-foreground,#94a3b8)]">현재 점수</div>
+            <div id="scoreDisplay" class="text-xl font-black text-emerald-400 font-mono">0 / 20</div>
+          </div>
+          <button onclick="resetQuiz()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-700 hover:bg-slate-600 transition">
+            🔄 다시 풀기
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz Questions Container -->
+      <div id="quizContainer" class="space-y-4"></div>
+    </section>
+
+    <!-- TAB 5: TABLES -->
+    <section id="tab-tables" class="tab-content space-y-6 hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-[var(--card-border,#334155)]">
+        <h2 class="text-lg font-bold text-purple-400 flex items-center gap-2">
+          <span>📊</span> 기말고사 직전 최종 암기 비교 총정리표
+        </h2>
+        <span class="text-xs text-[var(--muted-foreground,#94a3b8)]">시험 시작 10분 전 필수 정독</span>
+      </div>
+
+      <!-- Table 1: Compiler vs Interpreter -->
+      <div class="bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-3">
+        <h3 class="text-sm font-bold text-blue-300">1. 컴파일러 vs 인터프리터 비교</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse border border-[var(--card-border,#334155)] text-xs">
+            <thead class="bg-slate-800 text-[var(--foreground,#f8fafc)]">
+              <tr>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">비교 항목</th>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">컴파일러 (Compiler)</th>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">인터프리터 (Interpreter)</th>
+              </tr>
+            </thead>
+            <tbody class="text-[var(--muted-foreground,#94a3b8)]">
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">번역 방식</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">전체 프로그램을 일괄 번역</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">한 줄(행)씩 번역하며 즉시 실행</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">목적 파일 생성</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-blue-400 font-bold">생성함 (.obj)</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-red-400 font-bold">생성하지 않음</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">실행 속도</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-emerald-400 font-bold">빠름 (반복 실행에 유리)</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">느림</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">대표 언어</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] font-mono">C, C++, Java</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] font-mono">Python, JavaScript, BASIC</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Table 2: Loops comparison -->
+      <div class="bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-3">
+        <h3 class="text-sm font-bold text-emerald-300">2. 반복문 3종 (for vs while vs do~while) 비교</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse border border-[var(--card-border,#334155)] text-xs">
+            <thead class="bg-slate-800 text-[var(--foreground,#f8fafc)]">
+              <tr>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">구분</th>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">for문</th>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">while문</th>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">do ~ while문</th>
+              </tr>
+            </thead>
+            <tbody class="text-[var(--muted-foreground,#94a3b8)]">
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">주 사용 용도</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-blue-300 font-semibold">횟수가 정해진 반복</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">조건에 따른 반복</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">조건에 따른 반복</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">조건 검사 시점</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">선(先) 조건 검사</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">선(先) 조건 검사</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-purple-300 font-bold">후(後) 조건 검사</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">최소 실행 횟수</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">0회 가능</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">0회 가능</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-emerald-400 font-bold">무조건 최소 1회 실행</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">끝 세미콜론(;)</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">없음</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">없음</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-amber-300 font-bold">while(조건); 필수!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Table 3: Jump statements -->
+      <div class="bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-3">
+        <h3 class="text-sm font-bold text-purple-300">3. 이동문 3종 (break vs continue vs goto) 비교</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse border border-[var(--card-border,#334155)] text-xs">
+            <thead class="bg-slate-800 text-[var(--foreground,#f8fafc)]">
+              <tr>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">구분</th>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">break문</th>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">continue문</th>
+                <th class="p-2.5 border border-[var(--card-border,#334155)]">goto문</th>
+              </tr>
+            </thead>
+            <tbody class="text-[var(--muted-foreground,#94a3b8)]">
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">사용 가능한 곳</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">반복문 전체, switch문</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-emerald-400 font-semibold">반복문 전용 (switch 불가)</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">함수 내부 어디서나</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">실행 동작</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-blue-300 font-bold">루프 완전히 벗어나 탈출</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-emerald-300 font-bold">이번 회차 건너뛰고 다음 반복 진행</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">지정된 레이블로 무조건 점프</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">이동 위치</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">해당 블록의 바깥 다음 줄</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">for: 증감식 / while: 조건식</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)]">레이블 위치</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-[var(--foreground,#f8fafc)] border border-[var(--card-border,#334155)]">현대 프로그래밍 평가</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-blue-400">필수적 제어문</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-emerald-400">필요 시 권장</td>
+                <td class="p-2.5 border border-[var(--card-border,#334155)] text-red-400 font-bold">스파게티 코드 유발로 사용 지양(비권장)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    // 20 Multiple Choice Questions Data
+    const questions = [
+      {
+        id: 1,
+        page: "18p",
+        topic: "언어의 분류",
+        question: "다음 중 프로그래밍 언어의 종류에서 객체 지향 언어(Object-Oriented Language)에 해당하는 것만으로 묶인 것은?",
+        options: [
+          "C, FORTRAN, COBOL",
+          "C++, Java, Python",
+          "BASIC, Pascal, C",
+          "ALGOL, PL/1, 어셈블리어"
+        ],
+        answer: 2,
+        explanation: "C++, Java, Python, C# 등은 객체 지향 언어이며, C, FORTRAN, COBOL, Pascal 등은 절차 지향 언어입니다."
+      },
+      {
+        id: 2,
+        page: "21p~22p",
+        topic: "번역 프로그램",
+        question: "언어 번역 프로그램인 컴파일러(Compiler)와 인터프리터(Interpreter)에 대한 설명 중 옳은 것은?",
+        options: [
+          "인터프리터는 프로그램 전체를 한 번에 기계어로 번역하여 목적 파일을 생성한다.",
+          "컴파일러는 한 줄씩 번역하면서 즉시 실행하므로 전체 실행 속도가 인터프리터보다 느리다.",
+          "인터프리터는 목적 프로그램을 생성하지 않고 즉시 실행하므로 번역 속도는 빠르지만 반복 실행 속도는 느리다.",
+          "C 언어는 대표적인 인터프리터 언어이다."
+        ],
+        answer: 3,
+        explanation: "인터프리터는 목적 프로그램(.obj)을 생성하지 않고 행 단위로 번역/실행하므로 번역은 빠르나 실행 속도는 느립니다."
+      },
+      {
+        id: 3,
+        page: "26p",
+        topic: "알고리즘 5대 조건",
+        question: "알고리즘이 만족해야 할 조건에 대한 설명으로 옳지 않은 것은?",
+        options: [
+          "입력은 반드시 1개 이상 외부에서 주어져야만 한다.",
+          "최소한 하나 이상의 유효한 출력이 도출되어야 한다.",
+          "수행 단계는 무한히 지속되지 않고 반드시 유한한 단계 내에서 종료되어야 한다.",
+          "모든 명령어는 컴퓨터에서 실제로 수행 가능한 유효성을 지녀야 한다."
+        ],
+        answer: 1,
+        explanation: "입력은 0개 이상(외부 입력이 없어도 내부 초기 데이터로 수행 가능)일 수 있으나, 출력은 반드시 1개 이상 존재해야 합니다."
+      },
+      {
+        id: 4,
+        page: "29p",
+        topic: "순서도 기호",
+        question: "순서도 기호 중 조건 판단 및 분기를 나타내는 기호의 형태로 올바른 것은?",
+        options: [
+          "평행사변형",
+          "마름모",
+          "직사각형",
+          "타원"
+        ],
+        answer: 2,
+        explanation: "마름모(◇)는 조건 판단, 평행사변형은 입출력, 직사각형은 처리/연산, 타원은 단말(시작/종료) 기호입니다."
+      },
+      {
+        id: 5,
+        page: "48p",
+        topic: "C 빌드 과정",
+        question: "C 언어 소스 코드가 실행 파일로 완성되는 빌드 과정의 파일 확장자 변화 순서로 옳은 것은?",
+        options: [
+          ".obj → .c → .exe",
+          ".c → .obj → .exe",
+          ".c → .exe → .obj",
+          ".exe → .obj → .c"
+        ],
+        answer: 2,
+        explanation: "원시 소스 파일(.c)을 컴파일러가 번역하여 목적 파일(.obj)을 만들고, 링커가 결합하여 실행 파일(.exe)을 생성합니다."
+      },
+      {
+        id: 6,
+        page: "57p~58p",
+        topic: "식별자 규칙",
+        question: "C 언어에서 변수명(식별자)으로 사용할 수 있는 올바른 것은?",
+        options: [
+          "2start",
+          "s_while",
+          "double",
+          "user name"
+        ],
+        answer: 2,
+        explanation: "①은 숫자로 시작 불가, ③은 예약어 사용 불가, ④는 공백 포함 불가입니다. s_while은 영문자와 밑줄의 올바른 조합입니다."
+      },
+      {
+        id: 7,
+        page: "69p",
+        topic: "자료형 크기",
+        question: "C 언어의 기본 자료형 중 메모리 크기가 4 Byte가 아닌 것은?",
+        options: [
+          "int",
+          "float",
+          "long",
+          "double"
+        ],
+        answer: 4,
+        explanation: "double은 배정도 실수형으로 메모리 크기가 8 Byte입니다. (int, float, long은 4 Byte)"
+      },
+      {
+        id: 8,
+        page: "82p",
+        topic: "printf 서식 제어",
+        question: "C 언어에서 `printf(\"%.2f\\n\", 1.235);` 문장을 실행했을 때 화면에 출력되는 결과는?",
+        options: [
+          "1.23",
+          "1.24",
+          "1.235",
+          "1.2"
+        ],
+        answer: 2,
+        explanation: "`%.2f`는 소수점 둘째 자리까지 출력하며 셋째 자리 5가 반올림되어 1.24가 출력됩니다."
+      },
+      {
+        id: 9,
+        page: "84p~87p",
+        topic: "scanf_s 오류",
+        question: "다음 코드에서 `scanf_s` 입력 시 런타임 에러가 발생하는 원인으로 올바른 것은?\n`int num; scanf_s(\"%d\", num);`",
+        options: [
+          "서식 지정자로 %d를 사용했기 때문에",
+          "변수 num 앞에 주소 연산자 &를 누락했기 때문에",
+          "num 변수를 float형으로 선언하지 않았기 때문에",
+          "main 함수 앞에 void를 붙이지 않았기 때문에"
+        ],
+        answer: 2,
+        explanation: "scanf_s는 값을 저장할 변수의 메모리 주소를 받아야 하므로 변수명 앞에 주소 연산자 `&`를 반드시 붙여야 합니다."
+      },
+      {
+        id: 10,
+        page: "96p",
+        topic: "정수 나눗셈 & %",
+        question: "C 언어에서 `int a = 7, b = 2;` 일 때 `a / b`와 `a % b`의 연산 결과로 바르게 짝지어진 것은?",
+        options: [
+          "3.5 , 1",
+          "3 , 1",
+          "3 , 0",
+          "3.5 , 0"
+        ],
+        answer: 2,
+        explanation: "정수 간 나눗셈 7 / 2의 결과는 몫인 3(정수)이며, 7 % 2의 결과는 나머지인 1입니다."
+      },
+      {
+        id: 11,
+        page: "97p",
+        topic: "증감 연산자",
+        question: "다음 코드를 실행한 후 변수 a와 b의 값으로 옳은 것은?\n`int x = 5, y = 5; int a = ++x; int b = y++;`",
+        options: [
+          "a = 6, b = 6",
+          "a = 6, b = 5",
+          "a = 5, b = 6",
+          "a = 5, b = 5"
+        ],
+        answer: 2,
+        explanation: "++x(전위)는 먼저 1 증가하여 a=6, y++(후위)는 현재값 5를 b에 대입 후 y가 6이 되므로 b=5입니다."
+      },
+      {
+        id: 12,
+        page: "95p",
+        topic: "결합 방향",
+        question: "연산자의 결합 방향이 우측에서 좌측(←)으로 진행되는 연산자가 아닌 것은?",
+        options: [
+          "단항 연산자 (++, --, !)",
+          "삼항 조건 연산자 (? :)",
+          "대입 연산자 (=, +=)",
+          "산술 연산자 (+, -, *, /)"
+        ],
+        answer: 4,
+        explanation: "산술 연산자는 좌측에서 우측(→)으로 결합합니다. 단항, 삼항 조건, 대입 연산자는 우측에서 좌측(←)으로 결합합니다."
+      },
+      {
+        id: 13,
+        page: "115p",
+        topic: "제어문 분류",
+        question: "프로그램 제어문의 3대 분류 중 이동문(분기문)에 속하는 명령어만으로 묶인 것은?",
+        options: [
+          "if, switch",
+          "for, while, do~while",
+          "break, continue, goto",
+          "main, return, void"
+        ],
+        answer: 3,
+        explanation: "break, continue, goto는 프로그램 흐름을 다른 위치로 넘기는 이동문(분기문)입니다."
+      },
+      {
+        id: 14,
+        page: "116p",
+        topic: "if문 중괄호",
+        question: "C 언어의 if 조건문에 대한 설명으로 옳지 않은 것은?",
+        options: [
+          "조건식의 판별 결과는 참(0이 아님)과 거짓(0)으로 구분된다.",
+          "처리해야 할 문장이 한 문장일 때도 반드시 중괄호({ })를 써야만 한다.",
+          "처리할 문장이 둘 이상일 때는 복합문으로서 중괄호({ })로 묶어야 한다.",
+          "조건식 판단 기호는 순서도에서 마름모 형태로 나타낸다."
+        ],
+        answer: 2,
+        explanation: "처리 문장이 단 1줄(단일 문장)일 때는 중괄호를 생략할 수 있습니다."
+      },
+      {
+        id: 15,
+        page: "122p",
+        topic: "switch 문법 규칙",
+        question: "C 언어의 `switch ~ case`문에 대한 설명으로 옳지 않은 것은?",
+        options: [
+          "switch 괄호 안의 식에는 실수형(float, double) 변수를 사용할 수 있다.",
+          "case 라벨 뒤에는 변수가 올 수 없으며 오직 상수만 올 수 있다.",
+          "case 블록 끝에 break;가 없으면 다음 case의 문장을 계속해서 실행한다.",
+          "default 문은 일치하는 case 조건이 없을 때 수행되며 생략 가능하다."
+        ],
+        answer: 1,
+        explanation: "switch문 뒤 식에는 정수형 변수/수식, 문자형 상수만 올 수 있으며 실수형(float, double)은 절대 올 수 없습니다!"
+      },
+      {
+        id: 16,
+        page: "123p",
+        topic: "반복문 용도",
+        question: "반복 횟수가 5회 또는 100회처럼 미리 정해져 있는 경우에 가장 적합한 반복문은?",
+        options: [
+          "while문",
+          "do ~ while문",
+          "for문",
+          "switch ~ case문"
+        ],
+        answer: 3,
+        explanation: "횟수가 정해진 반복에는 for문이 주로 사용되고, 횟수가 정해지지 않은 반복에는 while이나 do~while이 사용됩니다."
+      },
+      {
+        id: 17,
+        page: "125p",
+        topic: "for 변수 최종값",
+        question: "다음 반복문이 정상적으로 종료되었을 때, 변수 i의 최종값은?\n`int i; for(i = 1; i <= 5; i++) { }`",
+        options: [
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        answer: 3,
+        explanation: "i=5일 때 본문을 실행한 후 i++에 의해 i=6이 된 상태에서 조건식 6 <= 5가 거짓이 되어 탈출하므로 최종값은 6입니다."
+      },
+      {
+        id: 18,
+        page: "130p",
+        topic: "do~while 특징",
+        question: "while문과 비교하여 do ~ while문이 가지는 가장 결정적인 특징은?",
+        options: [
+          "조건식이 참일 때만 반복 문장을 실행한다.",
+          "조건식의 참/거짓과 무관하게 무조건 최소 1회는 본문이 실행된다.",
+          "반복문 끝에 세미콜론을 절대로 붙이지 않는다.",
+          "for문으로 상호 변환이 불가능하다."
+        ],
+        answer: 2,
+        explanation: "do~while문은 선 실행, 후 검사 방식이므로 조건이 처음부터 거짓이더라도 무조건 최소 1회는 실행됩니다."
+      },
+      {
+        id: 19,
+        page: "131p",
+        topic: "중첩 루프 break",
+        question: "중첩 for문(for문 안의 for문) 내부에서 `break;` 명령이 실행되었을 때 일어나는 현상으로 옳은 것은?",
+        options: [
+          "전체 프로그램이 즉시 종료된다.",
+          "바깥쪽과 안쪽의 모든 반복문이 동시에 종료된다.",
+          "break문이 포함된 가장 안쪽의 반복문 1개만 벗어난다.",
+          "반복문의 처음 증감식 위치로 이동한다."
+        ],
+        answer: 3,
+        explanation: "break문은 자신을 감싸고 있는 가장 가까운 1개의 반복문만 탈출하며, 바깥쪽 루프는 계속 실행됩니다."
+      },
+      {
+        id: 20,
+        page: "133p",
+        topic: "continue 동작",
+        question: "for문 실행 중 `continue;` 명령을 만났을 때 일어나는 동작으로 옳은 것은?",
+        options: [
+          "해당 for문을 완전히 종료하고 루프 밖으로 탈출한다.",
+          "현재 회차의 남은 실행문을 건너뛰고 증감식으로 이동하여 다음 반복을 수행한다.",
+          "main 함수의 처음 위치로 이동한다.",
+          "프로그램을 일시 정지하고 사용자 입력을 대기한다."
+        ],
+        answer: 2,
+        explanation: "continue문은 루프를 탈출하지 않고 이번 회차의 남은 문장을 건너뛴 후 for문의 증감식으로 이동합니다."
+      }
+    ];
+
+    let userAnswers = {};
+    let teacherMode = false;
+
+    // Render Quiz Questions
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = questions.map((q, idx) => {
+        const userAnswer = userAnswers[q.id];
+        const isAnswered = userAnswer !== undefined;
+        const isCorrect = isAnswered && userAnswer === q.answer;
+        const showSolution = teacherMode || isAnswered;
+
+        let cardClass = "quiz-card bg-[var(--card,#1e293b)] border border-[var(--card-border,#334155)] rounded-2xl p-5 space-y-3 transition-all";
+        if (isAnswered) {
+          cardClass += isCorrect ? " correct" : " incorrect";
+        }
+
+        return `
+          <div class="${cardClass}" id="q-card-${q.id}">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-blue-400">문제 ${idx + 1} 번 <span class="text-[var(--muted-foreground,#94a3b8)] font-normal font-mono">(${q.page} ${q.topic})</span></span>
+              ${isAnswered ? (isCorrect ? '<span class="text-emerald-400 font-bold">⭕ 정답 (+1점)</span>' : '<span class="text-red-400 font-bold">❌ 오답</span>') : ''}
+            </div>
+            <div class="text-xs sm:text-sm font-semibold whitespace-pre-line text-[var(--foreground,#f8fafc)]">${q.question}</div>
+            
+            <!-- Options Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              ${q.options.map((opt, optIdx) => {
+                const optNum = optIdx + 1;
+                let btnClass = "text-left text-xs p-2.5 rounded-xl border transition-all flex items-center gap-2 ";
+                
+                if (showSolution && optNum === q.answer) {
+                  btnClass += "bg-emerald-500/20 text-emerald-300 border-emerald-500 font-bold";
+                } else if (userAnswer === optNum) {
+                  btnClass += "bg-red-500/20 text-red-300 border-red-500 font-bold";
+                } else {
+                  btnClass += "bg-[var(--background,#0f172a)]/70 hover:bg-slate-700/50 border-[var(--card-border,#334155)] text-[var(--muted-foreground,#94a3b8)]";
+                }
+
+                return `
+                  <button onclick="selectOption(${q.id}, ${optNum})" class="${btnClass}">
+                    <span class="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center text-[10px] font-mono shrink-0">${optNum}</span>
+                    <span>${opt}</span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- Explanation Box -->
+            <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700 text-xs space-y-1 ${showSolution ? '' : 'hidden'}">
+              <div class="font-bold text-emerald-400">💡 정답: ${q.answer}번 (${q.options[q.answer - 1]})</div>
+              <div class="text-[var(--muted-foreground,#94a3b8)] text-[11px] leading-relaxed">${q.explanation}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectOption(qId, optNum) {
+      userAnswers[qId] = optNum;
+      updateScore();
+      renderQuiz();
+    }
+
+    function updateScore() {
+      let score = 0;
+      let answeredCount = 0;
+      questions.forEach(q => {
+        if (userAnswers[q.id] !== undefined) {
+          answeredCount++;
+          if (userAnswers[q.id] === q.answer) score++;
+        }
+      });
+      document.getElementById('scoreDisplay').textContent = `${score} / ${questions.length}`;
+      document.getElementById('quizBadge').textContent = `${answeredCount}/${questions.length}`;
+    }
+
+    function resetQuiz() {
+      userAnswers = {};
+      teacherMode = false;
+      document.getElementById('teacherText').textContent = "교사 강의 모드 (정답 공개)";
+      document.getElementById('teacherIcon').textContent = "🎓";
+      updateScore();
+      renderQuiz();
+    }
+
+    function toggleTeacherMode() {
+      teacherMode = !teacherMode;
+      const text = document.getElementById('teacherText');
+      const icon = document.getElementById('teacherIcon');
+      if (teacherMode) {
+        text.textContent = "학생 풀이 모드 (정답 가리기)";
+        icon.textContent = "✍️";
+      } else {
+        text.textContent = "교사 강의 모드 (정답 공개)";
+        icon.textContent = "🎓";
+      }
+      renderQuiz();
+    }
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-500', 'shadow-sm');
+        btn.classList.add('border-transparent', 'text-[var(--muted-foreground,#94a3b8)]');
+      });
+
+      document.getElementById(tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('btn-' + tabId);
+      activeBtn.classList.remove('border-transparent', 'text-[var(--muted-foreground,#94a3b8)]');
+      activeBtn.classList.add('bg-blue-600', 'text-white', 'border-blue-500', 'shadow-sm');
+    }
+
+    // Real-time Search
+    function handleSearch() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.searchable-card');
+      if (!query) {
+        cards.forEach(c => c.style.display = '');
+        return;
+      }
+      // If searching, automatically activate part1 or part2
+      cards.forEach(c => {
+        const text = c.textContent.toLowerCase();
+        if (text.includes(query)) {
+          c.style.display = '';
+        } else {
+          c.style.display = 'none';
+        }
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQuiz();
+    });
+  </script>
+</body>
+</html>
